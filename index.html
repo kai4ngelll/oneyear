@@ -206,10 +206,28 @@
     background:linear-gradient(160deg, var(--rose-deep), var(--bg));
   }
 
+  .slide .bg{
+    position:absolute;
+    inset:0;
+    background-size:cover;
+    background-position:center;
+    filter:blur(22px) saturate(1.1) brightness(.55);
+    transform:scale(1.25);
+  }
+
+  .slide .bg::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(23,10,15,.35);
+  }
+
   .slide img{
+    position:relative;
+    z-index:1;
     width:100%;
     height:100%;
-    object-fit:cover;
+    object-fit:contain;
     display:block;
     user-select:none;
     -webkit-user-drag:none;
@@ -232,6 +250,7 @@
   }
   .slide.missing .fallback{ display:flex; }
   .slide.missing img{ display:none; }
+  .slide.missing .bg{ display:none; }
 
   .nav{
     position:absolute;
@@ -414,7 +433,7 @@
 
   <div class="controls">
     <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
-    <span class="counter" id="counter">01 / 18</span>
+    <span class="counter" id="counter">01 / 17</span>
   </div>
 
   <div class="tap-section">
@@ -430,7 +449,6 @@
   const photos = [
     "IMG_20260710_145828_587.jpg",
     "IMG_20260710_145856_706.jpg",
-    "IMG_20260710_150021_917.jpg",
     "IMG_20260711_144723_981.jpg",
     "IMG_20260711_144737_727.jpg",
     "IMG_20260711_144755_557.jpg",
@@ -460,6 +478,7 @@
     fig.className = 'slide';
     fig.innerHTML = `
       <div class="frame">
+        <div class="bg" style="background-image:url('${src}')"></div>
         <img src="${src}" alt="Мы вдвоём" loading="lazy" draggable="false">
         <div class="fallback"><span>фото появится здесь</span></div>
       </div>
