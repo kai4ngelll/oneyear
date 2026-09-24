@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Год вместе</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500;1,600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#170a0f;
+    --bg-soft:#20101a;
+    --surface:#2b1420;
+    --rose-deep:#6e1f3c;
+    --rose:#c4587c;
+    --rose-soft:#eab6c8;
+    --text:#f6e9ee;
+    --text-muted:#c79bab;
+    --gold:#caa06a;
+    --line: rgba(234,182,200,0.16);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:2;
+    opacity:.05;
+    mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding: 9vh 28px 14vh;
+    background:
+      radial-gradient(60% 50% at 82% 8%, rgba(110,31,60,0.55), transparent 60%),
+      radial-gradient(70% 60% at 12% 96%, rgba(196,88,124,0.20), transparent 65%),
+      var(--bg);
+  }
+
+  .hero-heart{
+    width:30px;
+    height:30px;
+    margin-bottom:34px;
+    opacity:0;
+    transform:scale(.85);
+    animation: heart-in .9s cubic-bezier(.2,.8,.2,1) .15s forwards, heart-pulse 3.6s ease-in-out 1.2s infinite alternate;
+  }
+  .hero-heart path{
+    fill:none;
+    stroke:var(--rose-soft);
+    stroke-width:1.4;
+  }
+
+  .letter{
+    max-width:600px;
+    width:100%;
+  }
+
+  .letter p{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    font-size:clamp(1.08rem, 1.1vw + .95rem, 1.4rem);
+    line-height:1.85;
+    color:var(--text);
+    margin:0 0 1.6em;
+    opacity:0;
+    transform:translateY(14px);
+    animation: rise-in .8s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  .letter p:nth-of-type(1){animation-delay:.45s;}
+  .letter p:nth-of-type(2){animation-delay:.65s;}
+  .letter p:nth-of-type(3){animation-delay:.85s;}
+  .letter p:nth-of-type(4){animation-delay:1.05s; margin-bottom:0;}
+
+  .signature{
+    max-width:600px;
+    width:100%;
+    text-align:right;
+    margin-top:38px;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(1.2rem, 1vw + 1rem, 1.5rem);
+    color:var(--rose-soft);
+    opacity:0;
+    transform:translateY(10px);
+    animation: rise-in .8s cubic-bezier(.2,.8,.2,1) 1.3s forwards;
+  }
+  .signature .heart-inline{
+    color:var(--rose);
+    margin-left:2px;
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:5vh;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+    background:none;
+    border:none;
+    color:var(--text-muted);
+    font-family:'Manrope',sans-serif;
+    font-size:.8rem;
+    letter-spacing:.02em;
+    cursor:pointer;
+    opacity:0;
+    animation: rise-in .8s ease 1.65s forwards;
+  }
+  .scroll-cue svg{
+    width:14px;height:14px;
+    animation: bob 1.8s ease-in-out infinite;
+  }
+  .scroll-cue svg path{ stroke:var(--text-muted); }
+  .scroll-cue:hover{ color:var(--rose-soft); }
+  .scroll-cue:hover svg path{ stroke:var(--rose-soft); }
+
+  @keyframes heart-in{ to{ opacity:1; transform:scale(1);} }
+  @keyframes heart-pulse{ from{ transform:scale(1); } to{ transform:scale(1.08); } }
+  @keyframes rise-in{ to{ opacity:1; transform:translateY(0);} }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(5px);} }
+
+  /* ---------- GALLERY ---------- */
+  .gallery{
+    padding:11vh 24px 12vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    background:
+      radial-gradient(55% 45% at 15% 0%, rgba(110,31,60,0.35), transparent 65%),
+      var(--bg-soft);
+  }
+
+  .gallery-title{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:clamp(1.6rem, 2vw + 1.2rem, 2.1rem);
+    color:var(--text);
+    margin:0 0 46px;
+    text-align:center;
+  }
+
+  .slider{
+    position:relative;
+    width:100%;
+    max-width:380px;
+  }
+
+  .slider-viewport{
+    width:100%;
+    aspect-ratio:4/5;
+    overflow:hidden;
+    border-radius:22px;
+    background:var(--surface);
+    box-shadow:
+      0 0 0 1px var(--line),
+      0 30px 60px -20px rgba(110,31,60,.55);
+  }
+
+  .slider-track{
+    display:flex;
+    height:100%;
+    will-change:transform;
+  }
+
+  .slide{
+    flex:0 0 100%;
+    height:100%;
+    margin:0;
+    position:relative;
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+  }
+
+  .slide .frame{
+    position:relative;
+    flex:1;
+    border-radius:14px;
+    overflow:hidden;
+    background:linear-gradient(160deg, var(--rose-deep), var(--bg));
+  }
+
+  .slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    user-select:none;
+    -webkit-user-drag:none;
+  }
+
+  .slide .fallback{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:10px;
+    color:var(--rose-soft);
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1rem;
+    text-align:center;
+    padding:20px;
+  }
+  .slide.missing .fallback{ display:flex; }
+  .slide.missing img{ display:none; }
+
+  .nav{
+    position:absolute;
+    top:calc(50% - 22px);
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    background:rgba(23,10,15,.55);
+    backdrop-filter:blur(6px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:background .25s ease, border-color .25s ease;
+  }
+  .nav:hover{ background:rgba(110,31,60,.55); border-color:var(--rose); }
+  .nav svg path{ stroke:var(--rose-soft); }
+  .nav.prev{ left:-14px; }
+  .nav.next{ right:-14px; }
+
+  .controls{
+    width:100%;
+    max-width:380px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:22px;
+  }
+
+  .progress{
+    flex:1;
+    height:2px;
+    background:var(--line);
+    border-radius:2px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:var(--rose);
+    transition:width .5s cubic-bezier(.2,.8,.2,1);
+  }
+
+  .counter{
+    font-family:'Manrope',sans-serif;
+    font-size:.78rem;
+    color:var(--text-muted);
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+  }
+
+  .tap-section{
+    margin-top:68px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+  }
+
+  .tap-heart{
+    position:relative;
+    width:72px;
+    height:72px;
+    border:none;
+    background:none;
+    padding:0;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+  }
+  .tap-heart svg{
+    width:100%;
+    height:100%;
+    transition:transform .15s ease;
+  }
+  .tap-heart svg path{
+    fill:var(--rose-deep);
+    stroke:var(--rose-soft);
+    stroke-width:1.2;
+    transition:fill .25s ease;
+  }
+  .tap-heart:hover svg{ transform:scale(1.05); }
+  .tap-heart.pop svg{ animation:tap-pop .38s cubic-bezier(.2,.8,.2,1); }
+  .tap-heart.pop svg path{ fill:var(--rose); }
+
+  @keyframes tap-pop{
+    0%{ transform:scale(1); }
+    35%{ transform:scale(1.28); }
+    100%{ transform:scale(1); }
+  }
+
+  .tap-count{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:600;
+    font-size:1.6rem;
+    color:var(--rose-soft);
+    font-variant-numeric:tabular-nums;
+    min-width:1ch;
+  }
+
+  .tap-label{
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.05rem;
+    color:var(--text-muted);
+    text-align:center;
+    max-width:280px;
+    margin:0;
+  }
+
+  .mini-heart{
+    position:absolute;
+    left:50%;
+    top:10%;
+    width:16px;
+    height:16px;
+    pointer-events:none;
+    color:var(--rose);
+    transform:translate(-50%,0);
+    animation:float-up .9s ease-out forwards;
+  }
+  @keyframes float-up{
+    0%{ opacity:1; transform:translate(-50%,0) scale(.9); }
+    100%{ opacity:0; transform:translate(calc(-50% + var(--drift,0px)), -60px) scale(1.1); }
+  }
+
+  :focus-visible{
+    outline:2px solid var(--rose-soft);
+    outline-offset:3px;
+  }
+
+  @media (min-width:640px){
+    .slider{ max-width:400px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <svg class="hero-heart" viewBox="0 0 32 32" aria-hidden="true">
+    <path d="M16 27S3 19.2 3 10.9C3 6.6 6.4 3.5 10.3 3.5c2.5 0 4.6 1.3 5.7 3.3 1.1-2 3.2-3.3 5.7-3.3 3.9 0 7.3 3.1 7.3 7.4C29 19.2 16 27 16 27z"/>
+  </svg>
+
+  <div class="letter">
+    <p>Привет! Я безумно рад, что мы с тобой уже год вместе и через многое прошли. Мне до сих пор очень непривычно ощущать, что год назад мы уже общались и начали встречаться — блин, это очень круто, что это мои первые отношения, и я буквально уже мечтаю с тобой всю жизнь прожить и строю общие планы.</p>
+    <p>Я тебя безумно люблю, и эти эмоции через текст не передать. Решил сделать тебе вот такой сайт-напоминалку с текстом. Меня сейчас слёзы накатывают, эх…</p>
+    <p>Надеюсь, у нас отлично пройдёт день: мы встретимся, купим еды, и всё будет идеально. Я так этого жду, я так скучаю по тебе, солнышко.</p>
+    <p>Ты самая лучшая девушка в мире, мне с тобой очень повезло. Дальше — больше!!!</p>
+  </div>
+
+  <p class="signature">от вовчика <span class="heart-inline">❤</span></p>
+
+  <button class="scroll-cue" onclick="document.getElementById('gallery').scrollIntoView({behavior:'smooth'})">
+    <span>пролистай вниз</span>
+    <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 5l5 5 5-5" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</section>
+
+<section class="gallery" id="gallery">
+  <h2 class="gallery-title">приятные воспоминания всех времен года</h2>
+
+  <div class="slider">
+    <div class="slider-viewport" id="viewport">
+      <div class="slider-track" id="track">
+        <!-- slides injected by data below -->
+      </div>
+    </div>
+
+    <button class="nav prev" id="prevBtn" aria-label="Предыдущее фото">
+      <svg viewBox="0 0 14 14" width="14" height="14"><path d="M9 2L4 7l5 5" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="nav next" id="nextBtn" aria-label="Следующее фото">
+      <svg viewBox="0 0 14 14" width="14" height="14"><path d="M5 2l5 5-5 5" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div class="controls">
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="counter" id="counter">01 / 18</span>
+  </div>
+
+  <div class="tap-section">
+    <button class="tap-heart" id="tapHeart" aria-label="Нажми на сердечко">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 27S3 19.2 3 10.9C3 6.6 6.4 3.5 10.3 3.5c2.5 0 4.6 1.3 5.7 3.3 1.1-2 3.2-3.3 5.7-3.3 3.9 0 7.3 3.1 7.3 7.4C29 19.2 16 27 16 27z"/></svg>
+    </button>
+    <span class="tap-count" id="tapCount">0</span>
+    <p class="tap-label">нажимай столько раз, сколько меня любишь</p>
+  </div>
+</section>
+
+<script>
+  const photos = [
+    "IMG_20260710_145828_587.jpg",
+    "IMG_20260710_145856_706.jpg",
+    "IMG_20260710_150021_917.jpg",
+    "IMG_20260711_144723_981.jpg",
+    "IMG_20260711_144737_727.jpg",
+    "IMG_20260711_144755_557.jpg",
+    "IMG_20260714_231526_192.jpg",
+    "IMG_20260717_000212_112.jpg",
+    "IMG_20260720_223543_969.jpg",
+    "IMG_20260722_233328_933.jpg",
+    "IMG_20260805_095755_332.jpg",
+    "IMG_20260831_181708_222.jpg",
+    "IMG_20260916_230600_227.jpg",
+    "IMG_20260924_220739_310.jpg",
+    "IMG_20260924_220749_854.jpg",
+    "IMG_20260924_220835_222.jpg",
+    "IMG_20260924_221336_975.jpg",
+    "IMG_20260924_221413_998.jpg"
+  ];
+
+  const track = document.getElementById('track');
+  const counterEl = document.getElementById('counter');
+  const progressFill = document.getElementById('progressFill');
+  const viewport = document.getElementById('viewport');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+
+  photos.forEach((src, i) => {
+    const fig = document.createElement('figure');
+    fig.className = 'slide';
+    fig.innerHTML = `
+      <div class="frame">
+        <img src="${src}" alt="Мы вдвоём" loading="lazy" draggable="false">
+        <div class="fallback"><span>фото появится здесь</span></div>
+      </div>
+    `;
+    const img = fig.querySelector('img');
+    img.addEventListener('error', () => fig.classList.add('missing'));
+    track.appendChild(fig);
+  });
+
+  const total = photos.length;
+  let index = 0;
+  let dragging = false;
+  let startX = 0;
+  let currentPct = 0;
+  let autoplayTimer = null;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function render(withTransition = true){
+    track.style.transition = withTransition ? 'transform .55s cubic-bezier(.2,.8,.2,1)' : 'none';
+    track.style.transform = `translateX(-${index * 100}%)`;
+    counterEl.textContent = String(index + 1).padStart(2,'0') + ' / ' + total;
+    progressFill.style.width = (total > 1 ? (index / (total - 1)) * 100 : 100) + '%';
+  }
+
+  function goTo(i){
+    index = (i + total) % total;
+    render();
+  }
+
+  function next(){ goTo(index + 1); }
+  function prev(){ goTo(index - 1); }
+
+  prevBtn.addEventListener('click', () => { prev(); restartAutoplay(); });
+  nextBtn.addEventListener('click', () => { next(); restartAutoplay(); });
+
+  window.addEventListener('keydown', (e) => {
+    const rect = viewport.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0){
+      if (e.key === 'ArrowRight'){ next(); restartAutoplay(); }
+      if (e.key === 'ArrowLeft'){ prev(); restartAutoplay(); }
+    }
+  });
+
+  // pointer / swipe
+  viewport.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startX = e.clientX;
+    track.style.transition = 'none';
+    viewport.setPointerCapture(e.pointerId);
+    stopAutoplay();
+  });
+
+  viewport.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX;
+    currentPct = (dx / viewport.clientWidth) * 100;
+    track.style.transform = `translateX(calc(-${index * 100}% + ${currentPct}%))`;
+  });
+
+  function endDrag(){
+    if (!dragging) return;
+    dragging = false;
+    if (currentPct < -12) next();
+    else if (currentPct > 12) prev();
+    else render();
+    currentPct = 0;
+    restartAutoplay();
+  }
+
+  viewport.addEventListener('pointerup', endDrag);
+  viewport.addEventListener('pointercancel', endDrag);
+  viewport.addEventListener('pointerleave', () => { if (dragging) endDrag(); });
+
+  function stopAutoplay(){
+    if (autoplayTimer) clearInterval(autoplayTimer);
+    autoplayTimer = null;
+  }
+  function startAutoplay(){
+    if (reduceMotion) return;
+    stopAutoplay();
+    autoplayTimer = setInterval(next, 4500);
+  }
+  function restartAutoplay(){
+    stopAutoplay();
+    setTimeout(startAutoplay, 4500);
+  }
+
+  render(false);
+  startAutoplay();
+
+  // tap-heart counter
+  const tapHeart = document.getElementById('tapHeart');
+  const tapCount = document.getElementById('tapCount');
+  let taps = 0;
+
+  tapHeart.addEventListener('click', () => {
+    taps++;
+    tapCount.textContent = taps;
+
+    tapHeart.classList.remove('pop');
+    void tapHeart.offsetWidth;
+    tapHeart.classList.add('pop');
+
+    if (!reduceMotion){
+      const mini = document.createElement('span');
+      mini.className = 'mini-heart';
+      mini.textContent = '❤';
+      mini.style.setProperty('--drift', (Math.random() * 30 - 15) + 'px');
+      tapHeart.appendChild(mini);
+      mini.addEventListener('animationend', () => mini.remove());
+    }
+  });
+</script>
+
+</body>
+</html>
